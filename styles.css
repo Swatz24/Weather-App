@@ -1,0 +1,66 @@
+body{
+background-image: url('Images/bg5.jpeg');
+background-repeat: no-repeat;
+background-size: cover;
+
+}
+
+
+
+.search{
+  display: flex;
+  margin: 2em;
+  justify-content:first baseline
+}
+.searchbar{
+    border : none !important;
+  }
+  
+  #input:focus,
+  #input:active {
+   border : none !important;
+   outline: tan;
+  }
+
+
+
+.searchbtn{
+  border-radius: 50%;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.searchicon{
+ height: 20px;
+ width: 20px;
+}
+
+.weatherinfo{
+  display: none;
+}
+.invalid{
+  display: none;
+  margin: 2em;
+  padding: 0.5em 1em;
+  text-align: left;
+}
+
+.weather-desc{
+  margin-top: 0;
+}
+.additional, .sun{
+  display: none;
+}
+
+.sunimg{
+  height: 10em;
+  width: 10em;
+}
+
+.body1{
+  z-index: 100 !important;
+}
+
+
+
