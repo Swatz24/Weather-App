@@ -5,8 +5,6 @@ background-size: cover;
 
 }
 
-
-
 .search{
   display: flex;
   margin: 2em;
@@ -21,9 +19,7 @@ background-size: cover;
    border : none !important;
    outline: tan;
   }
-
-
-
+  
 .searchbtn{
   border-radius: 50%;
   outline: none;

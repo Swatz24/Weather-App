@@ -107,6 +107,18 @@ console.log(data);
             searchBoxElm.value ='';
       }  
 }
+//Calling function based on the input , check whether it is zip code or city.
+
+searchBtnElm.addEventListener(
+  'click', () => {
+        let input = searchBoxElm.value;
+      if (isNaN(input)){
+        checkWeatherCity(input);
+      }else {
+        checkWeather(input);
+      }
+    }
+ );
 
 // Displaying weather image based on the weather description.
 function determineWeather(weather){
@@ -128,7 +140,6 @@ function determineWeather(weather){
         return "Images/sand.png";
   }
 }
-
 
 // Displaying current Date and Time.
 
@@ -162,20 +173,5 @@ function calculateSunrise(input){
 }
 
 
-
-
-
-//Calling function based on the input , check whether it is zip code or city.
-
- searchBtnElm.addEventListener(
-  'click', () => {
-        let input = searchBoxElm.value;
-      if (!isNaN(input)){
-        checkWeather(input);
-      }else {
-        checkWeatherCity(input);
-      }
-    }
- );
 
 
