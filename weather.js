@@ -108,6 +108,7 @@ console.log(data);
       }  
 }
 
+// Displaying weather image based on the weather description.
 function determineWeather(weather){
       if(weather === 'Clear'){
         return "Images/clear.png";
@@ -141,17 +142,17 @@ const dateTime = document.querySelector('.js-dateTime');
 
 dateTime.innerText = `${month} ${date}, time`;
 
-// Calculating Sunrise and Sunset times (UTC Time)
+// Calculating Sunrise and Sunset times (GMT Time)
 
 function calculateSunrise1(input){
   let date = new Date(input*1000);
   let time = (date.toUTCString());
-  let sunrise = `${date.getUTCHours()}:${date.getUTCMinutes()} Coordinated Universal Time(UTC)`;
+  // let sunrise = `${date.getUTCHours()}:${date.getUTCMinutes()} Coordinated Universal Time(UTC)`;
   return time;
 
 }
 
-// Calculating Sunrise and Sunset times for Zipcodes (US Time)
+// Calculating Sunrise and Sunset times for Zip codes (US Time)
 
 function calculateSunrise(input){
   let date = new Date(input*1000);
