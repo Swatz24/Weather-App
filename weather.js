@@ -51,7 +51,7 @@ console.log(data);
             let sunrise = calculateSunrise(data.sys.sunrise);
             sunriseElm.innerText = `Sunrise : ${sunrise}`;
             let sunset = calculateSunrise(data.sys.sunset);
-            sunsetElm.innerText = `Sunrise : ${sunset}`;
+            sunsetElm.innerText = `Sunset : ${sunset}`;
             searchBoxElm.value ='';
       }
       else if(response.status === 404 || response.status ===400)
@@ -65,13 +65,48 @@ console.log(data);
 }
 
 
-searchBtnElm.addEventListener(
-  'click', () =>
-      {
-        let zipCode = searchBoxElm.value;
-        checkWeather(zipCode);
+// Function to fetch weather data based on the city provided.
+async function checkWeatherCity(city)
+{
+const response = await fetch("https://api.openweathermap.org/data/2.5/weather?q="+ city +"&units=imperial&appid="+ apiKey);
+let data = await response.json();
+console.log(data);
+     if(response.status === 200)
+     { 
+            invalidElm.style.display = "none";  
+            weatherInfoElm.style.display = "block";
+            additionalInfo.style.display = "block";
+            DayNightInfo.style.display = "block";
+            dateTime.innerText = `${month} ${date}, ${timeNew}`;
+            cityElm.innerText =  data.name;
+            tempElm.innerText = `${Math.round(data.main.temp)}°F`;
+            feelLike.innerText = `Feels like ${Math.round(data.main.feels_like)}°F`;
+            highLowElm.innerText = `High ${Math.round(data.main.temp_max)}°F ↑ 
+              Low ${Math.round(data.main.temp_min)}°F ↓ `;
+            let weatherImgTemp = data.weather[0].main;
+            weatherDescElm.innerText = (data.weather[0].description).toUpperCase() ;
+            let weatherCondition = determineWeather(weatherImgTemp);
+            weatherImg.src = weatherCondition;
+            humidityElm.innerText = `Humidity:${data.main.humidity}inHg`;
+            windSpeedElm.innerText = `Visibility:${(data.visibility)/1000} mi`;
+            let tempVisibility = (data.main.pressure)*0.03;
+            visibilityElm.innerText = `Pressure:${Math.round(tempVisibility)} %`;
+            pressureElm.innerText = `Wind Speed:${data.wind.speed} mph`;
+            let sunrise = calculateSunrise1(data.sys.sunrise);
+            sunriseElm.innerText = `Sunrise : ${sunrise}`;
+            let sunset = calculateSunrise1(data.sys.sunset);
+            sunsetElm.innerText = `Sunset : ${sunset}`;
+            searchBoxElm.value ='';
       }
-);
+      else if(response.status === 404 || response.status ===400)
+      {     console.log("invalid");
+            weatherInfoElm.style.display = "none";
+            additionalInfo.style.display = "none";
+            DayNightInfo.style.display = "none";
+            invalidElm.style.display = "block";
+            searchBoxElm.value ='';
+      }  
+}
 
 function determineWeather(weather){
       if(weather === 'Clear'){
@@ -106,7 +141,17 @@ const dateTime = document.querySelector('.js-dateTime');
 
 dateTime.innerText = `${month} ${date}, time`;
 
-// Calculating Sunrise and Sunset times.
+// Calculating Sunrise and Sunset times (UTC Time)
+
+function calculateSunrise1(input){
+  let date = new Date(input*1000);
+  let time = (date.toUTCString());
+  let sunrise = `${date.getUTCHours()}:${date.getUTCMinutes()} Coordinated Universal Time(UTC)`;
+  return time;
+
+}
+
+// Calculating Sunrise and Sunset times for Zipcodes (US Time)
 
 function calculateSunrise(input){
   let date = new Date(input*1000);
@@ -114,3 +159,22 @@ function calculateSunrise(input){
   return time;
 
 }
+
+
+
+
+
+//Calling function based on the input , check whether it is zip code or city.
+
+ searchBtnElm.addEventListener(
+  'click', () => {
+        let input = searchBoxElm.value;
+      if (!isNaN(input)){
+        checkWeather(input);
+      }else {
+        checkWeatherCity(input);
+      }
+    }
+ );
+
+
